@@ -69,7 +69,7 @@ final class HbaseConnManager {
                 throw new IOException(e);
             }
         } else {
-            return ConnectionFactory.createConnection(hbaseConfiguration, getNoKrbUserFromSubject(hbaseConfiguration, kerberosProperties.getUser()));
+            return ConnectionFactory.createConnection(hbaseConfiguration);
         }
 
     }
@@ -79,10 +79,10 @@ final class HbaseConnManager {
                 .create(UserGroupInformation.getUGIFromSubject(subject));
     }
 
-    private User getNoKrbUserFromSubject(Configuration configuration, String krbUser) throws IOException {
-        return UserProvider.instantiate(configuration)
-                .create(UserGroupInformation.createRemoteUser(krbUser));
-    }
+    // private User getNoKrbUserFromSubject(Configuration configuration, String krbUser) throws IOException {
+    //     return UserProvider.instantiate(configuration)
+    //             .create(UserGroupInformation.createRemoteUser(krbUser));
+    // }
 
     private static Configuration createHbaseConfiguration(String zkQuorum, KerberosProperties kerberosProperties) {
         Configuration hbaseConfig = HBaseConfiguration.create();

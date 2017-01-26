@@ -58,10 +58,10 @@ class CloudfoundryBridge(object):
         if self._vcap_services.is_kerberos_enabled():
             config["krb_master_principal"] = self._vcap_services.krb_master_principal
             config["krb_regionserver_principal"] = self._vcap_services.krb_regionserver_principal
-        config["krb_kdc"] = self._vcap_services.krb_kdc
-        config["krb_password"] = self._vcap_services.krb_password
-        config["krb_user"] = self._vcap_services.krb_user
-        config["krb_realm"] = self._vcap_services.krb_realm
+            config["krb_kdc"] = self._vcap_services.krb_kdc
+            config["krb_password"] = self._vcap_services.krb_password
+            config["krb_user"] = self._vcap_services.krb_user
+            config["krb_realm"] = self._vcap_services.krb_realm
 
 
         return config

@@ -89,11 +89,11 @@ class VcapServices(Vcap):
         if self.is_kerberos_enabled():
             self.krb_master_principal = hbase_config['hbase.master.kerberos.principal']
             self.krb_regionserver_principal = hbase_config['hbase.regionserver.kerberos.principal']
-        kerberos_service = self.json['kerberos'][0]['credentials']
-        self.krb_kdc = kerberos_service['kdc']
-        self.krb_password = kerberos_service['kpassword']
-        self.krb_user = kerberos_service['kuser']
-        self.krb_realm = kerberos_service['krealm']
+            kerberos_service = self.json['kerberos'][0]['credentials']
+            self.krb_kdc = kerberos_service['kdc']
+            self.krb_password = kerberos_service['kpassword']
+            self.krb_user = kerberos_service['kuser']
+            self.krb_realm = kerberos_service['krealm']
 
 
     def is_kerberos_enabled(self):
