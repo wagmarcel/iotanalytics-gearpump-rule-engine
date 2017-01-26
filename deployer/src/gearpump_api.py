@@ -111,9 +111,10 @@ class GearpumpApi:
             else:
                 print app_name + " was running and got killed"
 
-        self.__submit_app_jar(filename=filename)
+        response = self.__submit_app_jar(filename=filename)
 
-        print 'OK'
+        print 'Gearpump response:'
+        print response.text
 
     def __encode_gearpump_app_config(self, gearpump_app_config):
         return urllib.quote(util.json_dict_to_string(gearpump_app_config).replace(" ", ""))
