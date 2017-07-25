@@ -49,7 +49,7 @@ class GearpumpApi:
         return headers
 
     def __submit_app_jar(self, filename):
-        datagen, headers = self.__encode_and_prepare_datagen(filename)
+        # datagen, headers = self.__encode_and_prepare_datagen(filename)
 
         # Create the Request object
         request_url = self.gearpump_uri + GearpumpApiConfig.call_submit
@@ -59,10 +59,11 @@ class GearpumpApi:
             "jar": (os.path.basename(filename), open(filename, "rb"), 'application/x-java-archive')
 
         }
-        print headers
+
+        headers = self.__create_user_headers_with_cookies()
 
         # Do the request and get the response
-        response = requests.post(request_url, files=files, headers=self.__create_user_headers_with_cookies())
+        response = requests.post(request_url, files=files, headers=headers)
         return response
 
     def __find_active_app_id_by_name(self, name):
@@ -96,7 +97,9 @@ class GearpumpApi:
         self.gearpump_user_cookies = self.__parse_gearpump_user_cookies(cookies)
 
     def submit_app(self, filename, app_name, gearpump_app_config=None, force=False):
-        print "Gearpump rule engine config - " + str(gearpump_app_config)
+        print "Gearpump rule engine config"
+        print str(gearpump_app_config)
+
         self.gearpump_app_config = util.json_dict_to_string(gearpump_app_config).replace(" ", "")
 
         if self.gearpump_credentials is not None:
@@ -112,7 +115,7 @@ class GearpumpApi:
                 print app_name + " was running and got killed"
 
         response = self.__submit_app_jar(filename=filename)
-
+        
         print 'Gearpump response:'
         print response.text
 

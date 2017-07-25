@@ -45,4 +45,4 @@ class DashboardApi(object):
         try:
             return json.loads(response.text)['token']
         except:
-            raise Exception("Unable to parse Dashboard's token, invalid Dashboard's response - " + str(response))
+            raise Exception("Unable to parse Dashboard's token, invalid Dashboard's response - " + str(response) + str(response.text))

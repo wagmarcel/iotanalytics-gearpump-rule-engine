@@ -1,4 +1,5 @@
-# Copyright (c) 2015 Intel Corporation
+#!/bin/bash
+# Copyright (c) 2016 Intel Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -11,19 +12,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
 
-
-class DashboardApiConfig(object):
-    dashboard_api_version = "v1"
-    dashboard_call_auth_token = dashboard_api_version + "/api/auth/token"
-
-
-class GearpumpApiConfig(object):
-    version = "v1.0"
-    prefix = "/api/" + version
-    prefix_master = prefix + "/master/"
-    call_login = "/login"
-    call_submit = prefix_master + "submitapp"
-    call_submit_with_args = call_submit + "?args="
-    call_applist = prefix_master + "applist"
-    call_appmaster = prefix + "/appmaster"
+source target/classes/resources/version.properties &&
+export RULE_ENGINE_PACKAGE_NAME=gearpump-rule-engine-${VERSION}-jar-with-dependencies.jar &&
+cd deployer &&
+python src/app.py --local
