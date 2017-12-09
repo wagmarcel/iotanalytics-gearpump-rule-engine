@@ -23,6 +23,7 @@ import com.intel.ruleengine.gearpump.data.RulesRepository;
 import com.intel.ruleengine.gearpump.tasks.messages.Observation;
 import com.intel.ruleengine.gearpump.tasks.messages.Rule;
 import org.apache.gearpump.Message;
+import org.apache.gearpump.DefaultMessage;
 import org.apache.gearpump.streaming.task.TaskContext;
 import org.junit.Before;
 import org.junit.Test;
@@ -56,7 +57,7 @@ public class PersistRulesTaskTest {
     private RulesApi rulesApi;
 
     @Mock
-    private Message message;
+    private DefaultMessage message;
 
     private Gson gson = new Gson();
 
@@ -102,7 +103,7 @@ public class PersistRulesTaskTest {
 
     @Test
     public void onNextShouldCatchInvalidMessageTypeException() throws IOException {
-        when(message.value()).thenReturn(new Observation());
+        when(message.value()).thenReturn(new Observation().getValue());
         persistRulesTask.onNext(message);
 
         verify(message, times(1)).value();
