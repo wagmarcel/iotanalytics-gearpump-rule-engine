@@ -6,7 +6,7 @@ import com.intel.ruleengine.gearpump.data.HbaseProperties;
 import com.intel.ruleengine.gearpump.data.KerberosProperties;
 import com.intel.ruleengine.gearpump.tasks.KafkaSourceProcessor;
 import com.intel.ruleengine.gearpump.util.LogHelper;
-import io.gearpump.cluster.UserConfig;
+import org.apache.gearpump.cluster.UserConfig;
 import org.slf4j.Logger;
 
 /**

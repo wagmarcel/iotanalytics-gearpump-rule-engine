@@ -2,8 +2,8 @@ package com.intel.ruleengine.gearpump.graph;
 
 import com.intel.ruleengine.gearpump.tasks.KafkaSourceProcessor;
 import com.intel.ruleengine.gearpump.tasks.processors.*;
-import io.gearpump.cluster.UserConfig;
-import io.gearpump.streaming.javaapi.Processor;
+import org.apache.gearpump.cluster.UserConfig;
+import org.apache.gearpump.streaming.javaapi.Processor;
 
 /*
  * Copyright (c) 2016 Intel Corporation

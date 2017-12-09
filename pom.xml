@@ -8,7 +8,7 @@
     <artifactId>gearpump-rule-engine</artifactId>
     <version>0.15.0</version>
     <properties>
-        <gearpumpVersion>0.8.0</gearpumpVersion>
+        <gearpumpVersion>0.8.4</gearpumpVersion>
         <jacocoVersion>0.7.6.201602180812</jacocoVersion>
     </properties>
 
@@ -85,24 +85,24 @@
     <dependencies>
 
         <dependency>
-            <groupId>com.github.intel-hadoop</groupId>
+            <groupId>org.apache.gearpump</groupId>
             <artifactId>gearpump-core_2.11</artifactId>
             <version>${gearpumpVersion}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.intel-hadoop</groupId>
+            <groupId>org.apache.gearpump</groupId>
             <artifactId>gearpump-streaming_2.11</artifactId>
             <version>${gearpumpVersion}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.intel-hadoop</groupId>
+            <groupId>org.apache.gearpump</groupId>
             <artifactId>gearpump-external-kafka_2.11</artifactId>
             <version>${gearpumpVersion}</version>
         </dependency>
         <dependency>
-            <groupId>com.github.intel-hadoop</groupId>
+            <groupId>org.apache.gearpump</groupId>
             <artifactId>gearpump-external-hbase_2.11</artifactId>
             <version>${gearpumpVersion}</version>
         </dependency>

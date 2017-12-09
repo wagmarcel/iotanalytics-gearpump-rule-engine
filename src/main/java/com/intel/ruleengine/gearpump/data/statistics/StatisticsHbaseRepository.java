@@ -24,7 +24,7 @@ import com.intel.ruleengine.gearpump.data.StatisticsRepository;
 import com.intel.ruleengine.gearpump.data.alerts.ScanManager;
 import com.intel.ruleengine.gearpump.data.alerts.ScanProperties;
 import com.intel.ruleengine.gearpump.tasks.messages.Observation;
-import io.gearpump.cluster.UserConfig;
+import org.apache.gearpump.cluster.UserConfig;
 import org.apache.hadoop.hbase.HTableDescriptor;
 import org.apache.hadoop.hbase.client.Admin;
 import org.apache.hadoop.hbase.client.Put;

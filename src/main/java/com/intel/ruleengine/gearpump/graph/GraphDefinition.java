@@ -1,6 +1,6 @@
 package com.intel.ruleengine.gearpump.graph;
 
-import io.gearpump.streaming.javaapi.Processor;
+import org.apache.gearpump.streaming.javaapi.Processor;
 
 import java.util.*;
 

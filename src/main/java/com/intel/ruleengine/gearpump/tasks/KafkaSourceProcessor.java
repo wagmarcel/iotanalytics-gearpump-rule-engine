@@ -17,12 +17,12 @@
 
 package com.intel.ruleengine.gearpump.tasks;
 
-import io.gearpump.cluster.UserConfig;
-import io.gearpump.cluster.client.ClientContext;
-import io.gearpump.streaming.javaapi.Processor;
-import io.gearpump.streaming.kafka.KafkaSource;
-import io.gearpump.streaming.kafka.KafkaStorageFactory;
-import io.gearpump.streaming.kafka.lib.KafkaSourceConfig;
+import org.apache.gearpump.cluster.UserConfig;
+import org.apache.gearpump.cluster.client.ClientContext;
+import org.apache.gearpump.streaming.javaapi.Processor;
+import org.apache.gearpump.streaming.kafka.util.KafkaConfig;
+import org.apache.gearpump.streaming.kafka.KafkaSource;
+import org.apache.gearpump.streaming.kafka.KafkaStoreFactory;
 import kafka.api.OffsetRequest;
 
 import java.util.Properties;
@@ -43,21 +43,27 @@ public class KafkaSourceProcessor {
         String zookeeperQuorum = userConfig.getString(KAFKA_ZOOKEEPER_PROPERTY).get();
         String serverUri = userConfig.getString(KAFKA_URI_PROPERTY).get();
 
-        Properties zookeeperProperties = new Properties();
-        zookeeperProperties.setProperty("zookeeper.connect", zookeeperQuorum);
-        zookeeperProperties.setProperty("group.id", "gearpump");
+        Properties props = new Properties();
+	props.put(KafkaConfig.ZOOKEEPER_CONNECT_CONFIG, zookeeperQuorum);
+	props.put(KafkaConfig.BOOTSTRAP_SERVERS_CONFIG, serverUri);
+	props.put(KafkaConfig.CONSUMER_START_OFFSET_CONFIG,
+		  new java.lang.Long(OffsetRequest.LatestTime()));
+	props.put(KafkaConfig.CHECKPOINT_STORE_NAME_PREFIX_CONFIG, "gearpump");
+        //zookeeperProperties.setProperty("zookeeper.connect", zookeeperQuorum);
+        //zookeeperProperties.setProperty("group.id", "gearpump");
         // todo what is the default storage on TAP?
-        zookeeperProperties.setProperty("offsets.storage", "kafka");
+        //zookeeperProperties.setProperty("offsets.storage", "kafka");
 
-        KafkaSourceConfig sourceConfig = new KafkaSourceConfig(zookeeperProperties)
+        /*KafkaSourceConfig sourceConfig = new KafkaSourceConfig(zookeeperProperties)
                 .withConsumerStartOffset(OffsetRequest.LatestTime());
 
         Properties kafkaProperties = new Properties();
-        kafkaProperties.setProperty("bootstrap.servers", serverUri);
+        kafkaProperties.setProperty("bootstrap.servers", serverUri);*/
 
-        KafkaStorageFactory offsetStorageFactory = new KafkaStorageFactory(sourceConfig.consumerProps(), kafkaProperties);
-        kafkaSource = new KafkaSource(topic, sourceConfig.consumerProps(), offsetStorageFactory);
+        KafkaStoreFactory offsetStorageFactory = new KafkaStoreFactory(props);
+        kafkaSource = new KafkaSource(topic, props);
         context = ClientContext.apply();
+	kafkaSource.setCheckpointStore(offsetStorageFactory);
     }
 
     public Processor getKafkaSourceProcessor(int parallelProcessorNumber) {

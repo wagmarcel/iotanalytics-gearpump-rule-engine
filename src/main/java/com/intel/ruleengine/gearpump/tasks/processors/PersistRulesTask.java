@@ -27,11 +27,11 @@ import com.intel.ruleengine.gearpump.tasks.InvalidMessageTypeException;
 import com.intel.ruleengine.gearpump.tasks.RuleEngineTask;
 import com.intel.ruleengine.gearpump.tasks.messages.Rule;
 import com.intel.ruleengine.gearpump.tasks.messages.controllers.InputMessageParser;
-import io.gearpump.Message;
-import io.gearpump.cluster.UserConfig;
-import io.gearpump.streaming.javaapi.Processor;
-import io.gearpump.streaming.task.StartTime;
-import io.gearpump.streaming.task.TaskContext;
+import org.apache.gearpump.Message;
+import org.apache.gearpump.cluster.UserConfig;
+import org.apache.gearpump.streaming.javaapi.Processor;
+//import org.apache.gearpump.streaming.task.StartTime;
+import org.apache.gearpump.streaming.task.TaskContext;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -39,7 +39,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-
+import java.time.Instant;
 
 public class PersistRulesTask extends RuleEngineTask {
 
@@ -58,7 +58,7 @@ public class PersistRulesTask extends RuleEngineTask {
     }
 
     @Override
-    public void onStart(StartTime startTime) {
+    public void onStart(Instant startTime) {
         getLogger().info("PersistRulesTask start");
         try {
             rulesRepository.createTable();

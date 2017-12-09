@@ -18,11 +18,11 @@ package com.intel.ruleengine.gearpump.tasks;
 
 import com.intel.ruleengine.gearpump.tasks.messages.RulesWithObservation;
 import com.intel.ruleengine.gearpump.tasks.messages.controllers.MessageSender;
-import io.gearpump.Message;
-import io.gearpump.cluster.UserConfig;
-import io.gearpump.streaming.javaapi.Processor;
-import io.gearpump.streaming.task.Task;
-import io.gearpump.streaming.task.TaskContext;
+import org.apache.gearpump.Message;
+import org.apache.gearpump.cluster.UserConfig;
+import org.apache.gearpump.streaming.javaapi.Processor;
+import org.apache.gearpump.streaming.task.Task;
+import org.apache.gearpump.streaming.task.TaskContext;
 import org.slf4j.Logger;
 
 public abstract class RuleEngineTask extends Task {

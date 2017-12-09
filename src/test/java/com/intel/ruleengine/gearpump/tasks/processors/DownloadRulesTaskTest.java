@@ -29,8 +29,9 @@ import com.intel.ruleengine.gearpump.parsers.RuleParser;
 import com.intel.ruleengine.gearpump.rules.RuleStatus;
 import com.intel.ruleengine.gearpump.tasks.TaskHelper;
 import com.intel.ruleengine.gearpump.tasks.messages.Rule;
-import io.gearpump.Message;
-import io.gearpump.streaming.task.TaskContext;
+import org.apache.gearpump.Message;
+import org.apache.gearpump.DefaultMessage;
+import org.apache.gearpump.streaming.task.TaskContext;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -98,7 +99,7 @@ public class DownloadRulesTaskTest {
         List<ComponentRulesResponse> componentsRules = Arrays.asList(rulesResponse);
 
         Map<String, List<Rule>> expectedResult =  new RuleParser(componentsRules).getComponentRules();
-        Message expectedOutput = new Message(gson.toJson(expectedResult), 0L);
+        Message expectedOutput = DefaultMessage.apply(gson.toJson(expectedResult), 0L);
 
         when(rulesApi.getActiveComponentsRules()).thenReturn(componentsRules);
         downloadRulesTask.onNext(message);

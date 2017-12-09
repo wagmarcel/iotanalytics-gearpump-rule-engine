@@ -23,7 +23,7 @@ import com.intel.ruleengine.gearpump.tasks.InvalidMessageTypeException;
 import com.intel.ruleengine.gearpump.tasks.messages.Observation;
 import com.intel.ruleengine.gearpump.tasks.messages.Rule;
 import com.intel.ruleengine.gearpump.tasks.messages.RulesWithObservation;
-import io.gearpump.Message;
+import org.apache.gearpump.Message;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -39,7 +39,7 @@ public class InputMessageParser<ParsedObjectType> {
     }
 
     public ParsedObjectType parseInputMapMessage(Message message) throws InvalidMessageTypeException {
-        Object msg = message.msg();
+        Object msg = message.value();
         try {
             Type typeOfMessage = new TypeToken<Map<String, List<Rule>>>() { } .getType();
             return gson.fromJson((String) msg, typeOfMessage);
