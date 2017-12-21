@@ -105,6 +105,26 @@
             <groupId>org.apache.gearpump</groupId>
             <artifactId>gearpump-external-hbase_2.11</artifactId>
             <version>${gearpumpVersion}</version>
+	    <exclusions>
+	      <exclusion>
+		<groupId> org.apache.hbase</groupId>
+		<artifactId> hbase-client </artifactId>
+	      </exclusion>
+	      <exclusion>
+		<groupId> org.apache.hbase</groupId>
+		<artifactId> hbase-common </artifactId>
+	      </exclusion>
+	    </exclusions>
+        </dependency>
+	<dependency>
+          <groupId>org.apache.hbase</groupId>
+          <artifactId>hbase-client</artifactId>
+          <version>1.1.0</version>
+        </dependency>
+	<dependency>
+          <groupId>org.apache.hbase</groupId>
+          <artifactId>hbase-common</artifactId>
+          <version>1.1.0</version>
         </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>
