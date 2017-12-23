@@ -1,9 +1,9 @@
 FROM errordeveloper/oracle-jre
 
-RUN curl --location --retry 3 --insecure https://github.com/gearpump/gearpump/releases/download/0.8.0/gearpump-2.11-0.8.0.zip -o tmp.zip && unzip -q tmp.zip && rm tmp.zip && chmod +x gearpump-2.11-0.8.0/bin/*
+RUN curl --location --retry 3 --insecure https://dist.apache.org/repos/dist/release/incubator/gearpump/0.8.4-incubating/gearpump_2.11-0.8.4-incubating-bin.tgz -o tmp.tgz && gunzip tmp.tgz && tar -xf tmp.tar && rm tmp.tar && chmod +x gearpump_2.11-0.8.4-incubating/bin/*
 
-ADD gear.conf gearpump-2.11-0.8.0/conf/gear.conf
+ADD gear.conf gearpump_2.11-0.8.4-incubating/conf/gear.conf
 
 EXPOSE 8090
 
-ENTRYPOINT gearpump-2.11-0.8.0/bin/local & gearpump-2.11-0.8.0/bin/services
+ENTRYPOINT gearpump_2.11-0.8.4-incubating/bin/local & gearpump_2.11-0.8.4-incubating/bin/services
