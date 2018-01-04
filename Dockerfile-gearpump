@@ -1,4 +1,6 @@
-FROM errordeveloper/oracle-jre
+#FROM errordeveloper/oracle-jre
+#FROM java:8
+FROM sgrio/java-oracle:server_jre_8
 
 RUN curl --location --retry 3 --insecure https://dist.apache.org/repos/dist/release/incubator/gearpump/0.8.4-incubating/gearpump_2.11-0.8.4-incubating-bin.tgz -o tmp.tgz && gunzip tmp.tgz && tar -xf tmp.tar && rm tmp.tar && chmod +x gearpump_2.11-0.8.4-incubating/bin/*
 
