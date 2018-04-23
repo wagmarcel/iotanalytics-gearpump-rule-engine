@@ -25,8 +25,9 @@ import com.intel.ruleengine.gearpump.tasks.TaskHelper;
 import com.intel.ruleengine.gearpump.tasks.messages.Observation;
 import com.intel.ruleengine.gearpump.tasks.messages.Rule;
 import com.intel.ruleengine.gearpump.tasks.messages.RulesWithObservation;
-import io.gearpump.Message;
-import io.gearpump.streaming.task.TaskContext;
+import org.apache.gearpump.Message;
+import org.apache.gearpump.DefaultMessage;
+import org.apache.gearpump.streaming.task.TaskContext;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.junit.Before;
 import org.junit.Test;
@@ -81,9 +82,9 @@ public class GetComponentRulesTaskTest {
 
         List<Rule> rules = Arrays.asList(new Rule());
         List<RulesWithObservation> rulesWithObservation = Arrays.asList(new RulesWithObservation(observation, rules));
-        Message expectedOutput = new Message(gson.toJson(rulesWithObservation), 0L);
+        Message expectedOutput = DefaultMessage.apply(gson.toJson(rulesWithObservation), 0L);
 
-        when(message.msg()).thenReturn(Bytes.toBytes(gson.toJson(Arrays.asList(observation))));
+        when(message.value()).thenReturn(Bytes.toBytes(gson.toJson(Arrays.asList(observation))));
         when(rulesRepository.getComponentsRules(anyString(), anySet())).thenReturn(ImmutableMap.of(observation.getCid(), rules));
 
         rulesTask.onNext(message);
@@ -92,14 +93,14 @@ public class GetComponentRulesTaskTest {
 
     @Test
     public void onNextShouldCatchInvalidMessageTypeException() throws IOException {
-        when(message.msg()).thenReturn(new Observation());
+        when(message.value()).thenReturn(new Observation());
         rulesTask.onNext(message);
         verify(taskContext, never()).output(any());
     }
 
     @Test
     public void onNextShouldCatchIOException() throws IOException {
-        when(message.msg()).thenReturn(gson.toJson(new Observation()));
+        when(message.value()).thenReturn(gson.toJson(new Observation()));
         when(rulesRepository.getComponentsRules(any(), any())).thenThrow(IOException.class);
         rulesTask.onNext(message);
         verify(taskContext, never()).output(any());

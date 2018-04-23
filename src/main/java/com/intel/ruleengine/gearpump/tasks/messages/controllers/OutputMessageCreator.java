@@ -19,7 +19,7 @@ package com.intel.ruleengine.gearpump.tasks.messages.controllers;
 
 import com.google.gson.Gson;
 import com.intel.ruleengine.gearpump.tasks.TaskHelper;
-import io.gearpump.Message;
+import org.apache.gearpump.DefaultMessage;
 
 
 public class OutputMessageCreator<InnerMessageType> {
@@ -30,7 +30,7 @@ public class OutputMessageCreator<InnerMessageType> {
         gson = new Gson();
     }
 
-    public Message createOutputMessage(InnerMessageType message) {
-        return new Message(gson.toJson(message), TaskHelper.now());
+    public DefaultMessage createOutputMessage(InnerMessageType message) {
+        return DefaultMessage.apply(gson.toJson(message), TaskHelper.now());
     }
 }

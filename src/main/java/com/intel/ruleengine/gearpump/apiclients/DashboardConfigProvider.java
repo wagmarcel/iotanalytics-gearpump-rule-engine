@@ -18,7 +18,7 @@
 package com.intel.ruleengine.gearpump.apiclients;
 
 import com.intel.ruleengine.gearpump.util.ConfigHelper;
-import io.gearpump.cluster.UserConfig;
+import org.apache.gearpump.cluster.UserConfig;
 
 public class DashboardConfigProvider implements DashboardConfig {
 

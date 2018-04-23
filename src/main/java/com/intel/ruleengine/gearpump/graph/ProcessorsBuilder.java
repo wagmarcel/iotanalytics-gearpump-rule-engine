@@ -4,8 +4,8 @@ import com.intel.ruleengine.gearpump.tasks.KafkaSourceObservationsProcessor;
 import com.intel.ruleengine.gearpump.tasks.KafkaSourceRulesUpdateProcessor;
 import com.intel.ruleengine.gearpump.tasks.KafkaSinkHeartbeatProcessor;
 import com.intel.ruleengine.gearpump.tasks.processors.*;
-import io.gearpump.cluster.UserConfig;
-import io.gearpump.streaming.javaapi.Processor;
+import org.apache.gearpump.cluster.UserConfig;
+import org.apache.gearpump.streaming.javaapi.Processor;
 
 /*
  * Copyright (c) 2016 Intel Corporation

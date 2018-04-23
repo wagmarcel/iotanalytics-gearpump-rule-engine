@@ -24,8 +24,9 @@ import com.intel.ruleengine.gearpump.tasks.TaskHelper;
 import com.intel.ruleengine.gearpump.tasks.messages.Observation;
 import com.intel.ruleengine.gearpump.tasks.messages.Rule;
 import com.intel.ruleengine.gearpump.tasks.messages.RulesWithObservation;
-import io.gearpump.Message;
-import io.gearpump.streaming.task.TaskContext;
+import org.apache.gearpump.Message;
+import org.apache.gearpump.DefaultMessage;
+import org.apache.gearpump.streaming.task.TaskContext;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -68,55 +69,55 @@ public class SendAlertsTaskTest {
 
     @Test
     public void OnNextConditionsShouldBeFulfilled() throws InvalidDashboardResponseException {
-        Message expectedOutput = new Message(message, 0L);
+        Message expectedOutput = DefaultMessage.apply(message, 0L);
 
-        when(message.msg()).thenReturn(gson.toJson(
+        when(message.value()).thenReturn(gson.toJson(
                 Arrays.asList(new RulesWithObservation(new Observation(), Arrays.asList(new Rule()))))
         );
         sendAlertsTask.onNext(message);
 
-        verify(message, times(1)).msg();
+        verify(message, times(1)).value();
         verify(alertsApi, times(1)).pushAlert(any());
         verify(taskContext, times(1)).output(expectedOutput);
     }
 
     @Test
     public void OnNextConditionsShouldNotBeFulfilled() throws InvalidDashboardResponseException {
-        Message expectedOutput = new Message(message, 0L);
+        Message expectedOutput = DefaultMessage.apply(message, 0L);
 
-        when(message.msg()).thenReturn(gson.toJson(
+        when(message.value()).thenReturn(gson.toJson(
                 Arrays.asList(new RulesWithObservation(new Observation(), null)))
         );
         sendAlertsTask.onNext(message);
 
-        verify(message, times(1)).msg();
+        verify(message, times(1)).value();
         verify(alertsApi, never()).pushAlert(any());
         verify(taskContext, times(1)).output(expectedOutput);
     }
 
     @Test
     public void OnNextShouldCatchInvalidDashboardResponseException() throws InvalidDashboardResponseException {
-        Message expectedOutput = new Message(message, 0L);
+        Message expectedOutput = DefaultMessage.apply(message, 0L);
 
-        when(message.msg()).thenReturn(new Observation());
+        when(message.value()).thenReturn(new Observation());
         sendAlertsTask.onNext(message);
 
-        verify(message, times(2)).msg();
+        verify(message, times(2)).value();
         verify(alertsApi, never()).pushAlert(any());
         verify(taskContext, times(1)).output(expectedOutput);
     }
 
     @Test
     public void OnNextShouldCatchException() throws InvalidDashboardResponseException {
-        Message expectedOutput = new Message(message, 0L);
+        Message expectedOutput = DefaultMessage.apply(message, 0L);
 
-        when(message.msg()).thenReturn(gson.toJson(
+        when(message.value()).thenReturn(gson.toJson(
                 Arrays.asList(new RulesWithObservation(new Observation(), Arrays.asList(new Rule()))))
         );
         doThrow(Exception.class).when(alertsApi).pushAlert(any());
         sendAlertsTask.onNext(message);
 
-        verify(message, times(1)).msg();
+        verify(message, times(1)).value();
         verify(alertsApi, times(1)).pushAlert(any());
         verify(taskContext, times(1)).output(expectedOutput);
     }

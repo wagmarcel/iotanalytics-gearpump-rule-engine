@@ -2,7 +2,7 @@ package com.intel.ruleengine.gearpump.tasks.messages.controllers;
 
 import com.intel.ruleengine.gearpump.tasks.InvalidMessageTypeException;
 import com.intel.ruleengine.gearpump.tasks.messages.Observation;
-import io.gearpump.Message;
+import org.apache.gearpump.Message;
 
 import java.util.List;
 
@@ -30,7 +30,7 @@ public class KafkaMessageConverter {
     }
 
     public List<Observation> toObservationList() throws InvalidMessageTypeException {
-        Object messageContent = inputMessage.msg();
+        Object messageContent = inputMessage.value();
         if (messageContent instanceof byte[]) {
             String content = new String((byte[]) messageContent);
             return new InputMessageParser<List<Observation>>().parseInputListMessage(content);

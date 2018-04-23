@@ -27,16 +27,18 @@ import com.intel.ruleengine.gearpump.parsers.RuleParser;
 import com.intel.ruleengine.gearpump.tasks.RuleEngineTask;
 import com.intel.ruleengine.gearpump.tasks.messages.Rule;
 import com.intel.ruleengine.gearpump.tasks.messages.controllers.OutputMessageCreator;
-import io.gearpump.Message;
-import io.gearpump.cluster.UserConfig;
-import io.gearpump.streaming.javaapi.Processor;
-import io.gearpump.streaming.task.StartTime;
-import io.gearpump.streaming.task.TaskContext;
+import org.apache.gearpump.Message;
+import org.apache.gearpump.cluster.UserConfig;
+import org.apache.gearpump.streaming.javaapi.Processor;
+import org.apache.gearpump.streaming.source.Watermark;
+//import org.apache.gearpump.streaming.task.StartTime;
+import org.apache.gearpump.streaming.task.TaskContext;
 import scala.concurrent.duration.FiniteDuration;
 
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.time.Instant;
 
 @SuppressWarnings({"checkstyle:illegalcatch", "PMD.AvoidCatchingGenericException"})
 public class DownloadRulesTask extends RuleEngineTask {
@@ -57,9 +59,9 @@ public class DownloadRulesTask extends RuleEngineTask {
     }
 
     @Override
-    public void onStart(StartTime startTime) {
+    public void onStart(Instant startTime) {
         getLogger().debug("DownloadRulesTask starting...");
-        self().tell(new Message(START_MSG, now()), self());
+        self().tell(new Watermark(Instant.now()), self());
     }
 
     @Override

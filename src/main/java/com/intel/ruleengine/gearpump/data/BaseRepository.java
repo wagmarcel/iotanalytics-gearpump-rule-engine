@@ -18,7 +18,7 @@
 package com.intel.ruleengine.gearpump.data;
 
 import com.intel.ruleengine.gearpump.data.statistics.CustomAggregationClient;
-import io.gearpump.cluster.UserConfig;
+import org.apache.gearpump.cluster.UserConfig;
 import org.apache.hadoop.hbase.HColumnDescriptor;
 import org.apache.hadoop.hbase.HTableDescriptor;
 import org.apache.hadoop.hbase.TableName;

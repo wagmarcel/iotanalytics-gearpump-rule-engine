@@ -19,18 +19,21 @@ package com.intel.ruleengine.gearpump.tasks.processors;
 
 import com.google.gson.Gson;
 import com.intel.ruleengine.gearpump.tasks.RuleEngineTask;
-import io.gearpump.Message;
+import org.apache.gearpump.Message;
+import org.apache.gearpump.DefaultMessage;
 import com.intel.ruleengine.gearpump.tasks.InvalidMessageTypeException;
 import com.intel.ruleengine.gearpump.tasks.messages.controllers.InputMessageParser;
 import com.intel.ruleengine.gearpump.util.ConfigHelper;
-import io.gearpump.cluster.UserConfig;
-import io.gearpump.streaming.javaapi.Processor;
-import io.gearpump.streaming.task.StartTime;
-import io.gearpump.streaming.task.TaskContext;
+import org.apache.gearpump.cluster.UserConfig;
+import org.apache.gearpump.streaming.javaapi.Processor;
+import org.apache.gearpump.streaming.source.Watermark;
+//import org.apache.gearpump.streaming.task.StartTime;
+import org.apache.gearpump.streaming.task.TaskContext;
 import scala.concurrent.duration.FiniteDuration;
 import scala.Tuple2;
 import java.io.UnsupportedEncodingException;
 import java.util.concurrent.TimeUnit;
+import java.time.Instant;
 
 @SuppressWarnings({"checkstyle:illegalcatch", "PMD.AvoidCatchingGenericException"})
 public class HeartbeatTask extends RuleEngineTask {
@@ -53,7 +56,7 @@ public class HeartbeatTask extends RuleEngineTask {
     }
 
     @Override
-    public void onStart(StartTime startTime) {
+    public void onStart(Instant startTime) {
         getLogger().info("HeartbeatTask starting...");
         getContext().scheduleOnce(FiniteDuration.create(0, TimeUnit.SECONDS), new SelfTrigger());
     }
@@ -65,7 +68,7 @@ public class HeartbeatTask extends RuleEngineTask {
     }
 
     private Message getOutputMessage(Message message) {
-        Object msg = message.msg();
+        Object msg = message.value();
 
         byte[] key = null;
         byte[] value = null;
@@ -73,10 +76,10 @@ public class HeartbeatTask extends RuleEngineTask {
           key = "message".getBytes("UTF-8");
           value = ((String) msg).getBytes("UTF-8");
           Tuple2<byte[], byte[]> tuple = new Tuple2<byte[], byte[]>(key, value);
-          return new Message(tuple, now());
+          return DefaultMessage.apply(message, now());
         } catch (UnsupportedEncodingException e) {
           e.printStackTrace();
-          return new Message(msg, now());
+          return DefaultMessage.apply(message, now());
         }
     }
 
@@ -87,7 +90,7 @@ public class HeartbeatTask extends RuleEngineTask {
     private class SelfTrigger extends scala.runtime.AbstractFunction0 {
         @Override
         public Object apply() {
-            self().tell(new Message(MESSAGE, now()), self());
+            self().tell(new Watermark(Instant.now()), self());
             return null;
         }
     }

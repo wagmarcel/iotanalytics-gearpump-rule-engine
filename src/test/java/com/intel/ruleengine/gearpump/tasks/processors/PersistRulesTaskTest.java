@@ -22,8 +22,9 @@ import com.intel.ruleengine.gearpump.apiclients.rules.RulesApi;
 import com.intel.ruleengine.gearpump.data.RulesRepository;
 import com.intel.ruleengine.gearpump.tasks.messages.Observation;
 import com.intel.ruleengine.gearpump.tasks.messages.Rule;
-import io.gearpump.Message;
-import io.gearpump.streaming.task.TaskContext;
+import org.apache.gearpump.Message;
+import org.apache.gearpump.DefaultMessage;
+import org.apache.gearpump.streaming.task.TaskContext;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -56,7 +57,7 @@ public class PersistRulesTaskTest {
     private RulesApi rulesApi;
 
     @Mock
-    private Message message;
+    private DefaultMessage message;
 
     private Gson gson = new Gson();
 
@@ -84,28 +85,28 @@ public class PersistRulesTaskTest {
     public void onNextConditionsShouldBeFulfilled() throws IOException {
         Map<String, List<Rule>> ruleMap = getRulesMap(true);
 
-        when(message.msg()).thenReturn(gson.toJson(ruleMap));
+        when(message.value()).thenReturn(gson.toJson(ruleMap));
         persistRulesTask.onNext(message);
 
-        verify(message, times(1)).msg();
+        verify(message, times(1)).value();
         verify(rulesRepository, times(1)).putRulesAndRemoveNotExistingOnes(ruleMap);
     }
 
     @Test
     public void onNextConditionsShouldNotBeFulfilled() throws IOException {
-        when(message.msg()).thenReturn(gson.toJson(getRulesMap(false)));
+        when(message.value()).thenReturn(gson.toJson(getRulesMap(false)));
         persistRulesTask.onNext(message);
 
-        verify(message, times(1)).msg();
+        verify(message, times(1)).value();
         verify(rulesRepository, never()).putRulesAndRemoveNotExistingOnes(any());
     }
 
     @Test
     public void onNextShouldCatchInvalidMessageTypeException() throws IOException {
-        when(message.msg()).thenReturn(new Observation());
+        when(message.value()).thenReturn(new Observation().getValue());
         persistRulesTask.onNext(message);
 
-        verify(message, times(1)).msg();
+        verify(message, times(1)).value();
         verify(rulesRepository, never()).putRulesAndRemoveNotExistingOnes(any());
     }
 
@@ -113,11 +114,11 @@ public class PersistRulesTaskTest {
     public void onNextShouldCatchIOException() throws IOException {
         Map<String, List<Rule>> ruleMap = getRulesMap(true);
 
-        when(message.msg()).thenReturn(gson.toJson(ruleMap));
+        when(message.value()).thenReturn(gson.toJson(ruleMap));
         doThrow(IOException.class).when(rulesRepository).putRulesAndRemoveNotExistingOnes(anyMap());
         persistRulesTask.onNext(message);
 
-        verify(message, times(1)).msg();
+        verify(message, times(1)).value();
         verify(rulesRepository, times(1)).putRulesAndRemoveNotExistingOnes(ruleMap);
     }
 

@@ -26,8 +26,9 @@ import com.intel.ruleengine.gearpump.tasks.TaskHelper;
 import com.intel.ruleengine.gearpump.tasks.messages.Observation;
 import com.intel.ruleengine.gearpump.tasks.messages.Rule;
 import com.intel.ruleengine.gearpump.tasks.messages.RulesWithObservation;
-import io.gearpump.Message;
-import io.gearpump.streaming.task.TaskContext;
+import org.apache.gearpump.Message;
+import org.apache.gearpump.DefaultMessage;
+import org.apache.gearpump.streaming.task.TaskContext;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -73,20 +74,20 @@ public class CheckObservationInRulesTaskTest {
     @Test
     public void onNextConditionsShouldBeFulfilled() {
         List<RulesWithObservation> rulesWithObservation = getRulesWithObservation();
-        Message expectedOutput = new Message(gson.toJson(rulesWithObservation), 0L);
+        Message expectedOutput = DefaultMessage.apply(gson.toJson(rulesWithObservation), 0L);
 
-        when(message.msg()).thenReturn(gson.toJson(rulesWithObservation));
+        when(message.value()).thenReturn(gson.toJson(rulesWithObservation));
         observationInRulesTask.onNext(message);
 
         verify(taskContext, times(1)).output(expectedOutput);
-        verify(message, times(1)).msg();
+        verify(message, times(1)).value();
     }
 
     @Test
     public void onNextShouldCatchInvalidMessageTypeException() {
-        when(message.msg()).thenReturn(new Observation());
+        when(message.value()).thenReturn(new Observation());
         observationInRulesTask.onNext(message);
-        verify(message, times(2)).msg();
+        verify(message, times(2)).value();
     }
 
     private List<RulesWithObservation> getRulesWithObservation() {

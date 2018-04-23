@@ -18,7 +18,7 @@ package com.intel.ruleengine.gearpump.tasks.messages.controllers;
 
 import com.intel.ruleengine.gearpump.tasks.InvalidMessageTypeException;
 import com.intel.ruleengine.gearpump.tasks.messages.RulesWithObservation;
-import io.gearpump.Message;
+import org.apache.gearpump.Message;
 
 import java.util.List;
 
@@ -35,6 +35,6 @@ public final class MessageReceiver {
     }
 
     public List<RulesWithObservation> getMessage() throws InvalidMessageTypeException {
-        return new InputMessageParser<List<RulesWithObservation>>().parseInputListRulesMessage(message.msg());
+        return new InputMessageParser<List<RulesWithObservation>>().parseInputListRulesMessage(message.value());
     }
 }

@@ -15,7 +15,7 @@
  */
 package com.intel.ruleengine.gearpump.util;
 
-import io.gearpump.cluster.UserConfig;
+import org.apache.gearpump.cluster.UserConfig;
 import scala.Option;
 
 public final class ConfigHelper {

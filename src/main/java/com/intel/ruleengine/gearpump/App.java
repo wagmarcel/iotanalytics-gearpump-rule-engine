@@ -19,9 +19,9 @@ package com.intel.ruleengine.gearpump;
 
 import com.intel.ruleengine.gearpump.graph.GraphBuilder;
 import com.intel.ruleengine.gearpump.graph.GraphConfig;
-import io.gearpump.cluster.UserConfig;
-import io.gearpump.cluster.client.ClientContext;
-import io.gearpump.streaming.javaapi.StreamApplication;
+import org.apache.gearpump.cluster.UserConfig;
+import org.apache.gearpump.cluster.client.ClientContext;
+import org.apache.gearpump.streaming.javaapi.StreamApplication;
 
 public class App {
 

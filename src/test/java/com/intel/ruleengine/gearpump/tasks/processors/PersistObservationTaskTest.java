@@ -25,8 +25,8 @@ import com.intel.ruleengine.gearpump.tasks.messages.Observation;
 import com.intel.ruleengine.gearpump.tasks.messages.Rule;
 import com.intel.ruleengine.gearpump.tasks.messages.RuleCondition;
 import com.intel.ruleengine.gearpump.tasks.messages.RulesWithObservation;
-import io.gearpump.Message;
-import io.gearpump.streaming.task.TaskContext;
+import org.apache.gearpump.Message;
+import org.apache.gearpump.streaming.task.TaskContext;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -85,28 +85,28 @@ public class PersistObservationTaskTest {
         List<RulesWithObservation> rulesWithObservation = getRulesWithObservation(ConditionType.STATISTICS);
         List<Observation> expectedOutput = Arrays.asList(rulesWithObservation.get(0).getObservation());
 
-        when(message.msg()).thenReturn(gson.toJson(rulesWithObservation));
+        when(message.value()).thenReturn(gson.toJson(rulesWithObservation));
         persistObservationTask.onNext(message);
 
-        verify(message, times(1)).msg();
+        verify(message, times(1)).value();
         verify(statisticsRepository, times(1)).putObservationForStatisticsRuleCondition(expectedOutput);
     }
 
     @Test
     public void onNextConditionsShouldNotBeFulfilled() throws IOException {
-        when(message.msg()).thenReturn(gson.toJson(getRulesWithObservation(ConditionType.BASIC)));
+        when(message.value()).thenReturn(gson.toJson(getRulesWithObservation(ConditionType.BASIC)));
         persistObservationTask.onNext(message);
 
-        verify(message, times(1)).msg();
+        verify(message, times(1)).value();
         verify(statisticsRepository, never()).putObservationForStatisticsRuleCondition(any());
     }
 
     @Test
     public void onNextShouldCatchInvalidMessageTypeException() throws IOException {
-        when(message.msg()).thenReturn(new Observation());
+        when(message.value()).thenReturn(new Observation());
         persistObservationTask.onNext(message);
 
-        verify(message, times(2)).msg();
+        verify(message, times(2)).value();
         verify(statisticsRepository, never()).putObservationForStatisticsRuleCondition(any());
     }
 
@@ -115,11 +115,11 @@ public class PersistObservationTaskTest {
         List<RulesWithObservation> rulesWithObservation = getRulesWithObservation(ConditionType.STATISTICS);
         List<Observation> expectedOutput = Arrays.asList(rulesWithObservation.get(0).getObservation());
 
-        when(message.msg()).thenReturn(gson.toJson(rulesWithObservation));
+        when(message.value()).thenReturn(gson.toJson(rulesWithObservation));
         doThrow(IOException.class).when(statisticsRepository).putObservationForStatisticsRuleCondition(any());
         persistObservationTask.onNext(message);
 
-        verify(message, times(1)).msg();
+        verify(message, times(1)).value();
         verify(statisticsRepository, times(1)).putObservationForStatisticsRuleCondition(expectedOutput);
     }
 

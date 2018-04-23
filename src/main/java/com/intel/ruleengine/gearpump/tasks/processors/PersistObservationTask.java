@@ -27,15 +27,16 @@ import com.intel.ruleengine.gearpump.tasks.messages.Observation;
 import com.intel.ruleengine.gearpump.tasks.messages.RulesWithObservation;
 import com.intel.ruleengine.gearpump.tasks.messages.controllers.MessageReceiver;
 import com.intel.ruleengine.gearpump.tasks.storage.RuleComponentsStorageManager;
-import io.gearpump.Message;
-import io.gearpump.cluster.UserConfig;
-import io.gearpump.streaming.javaapi.Processor;
-import io.gearpump.streaming.task.StartTime;
-import io.gearpump.streaming.task.TaskContext;
+import org.apache.gearpump.Message;
+import org.apache.gearpump.cluster.UserConfig;
+import org.apache.gearpump.streaming.javaapi.Processor;
+//import org.apache.gearpump.streaming.task.StartTime;
+import org.apache.gearpump.streaming.task.TaskContext;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.time.Instant;
 
 public class PersistObservationTask extends RuleEngineTask {
 
@@ -56,7 +57,7 @@ public class PersistObservationTask extends RuleEngineTask {
     }
 
     @Override
-    public void onStart(StartTime startTime) {
+    public void onStart(Instant startTime) {
         super.onStart(startTime);
         try {
             statisticsRepository.createTable();
@@ -84,7 +85,7 @@ public class PersistObservationTask extends RuleEngineTask {
         } catch (IOException e) {
             getLogger().error("Unable to persistBasicAndStatisticsRuleComponents observation in hbase", e);
         } catch (InvalidMessageTypeException e) {
-            getLogger().warn("Incorrect format of message found - {}", message.msg().getClass().getCanonicalName());
+            getLogger().warn("Incorrect format of message found - {}", message.value().getClass().getCanonicalName());
         }
     }
 

@@ -1,7 +1,7 @@
 package com.intel.ruleengine.gearpump.graph;
 
 
-import io.gearpump.streaming.javaapi.Processor;
+import org.apache.gearpump.streaming.javaapi.Processor;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

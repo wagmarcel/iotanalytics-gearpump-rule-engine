@@ -22,8 +22,8 @@ import com.intel.ruleengine.gearpump.data.RuleConditionsRepository;
 import com.intel.ruleengine.gearpump.tasks.messages.Observation;
 import com.intel.ruleengine.gearpump.tasks.messages.RulesWithObservation;
 import com.intel.ruleengine.gearpump.tasks.storage.RuleComponentsStorageManager;
-import io.gearpump.Message;
-import io.gearpump.streaming.task.TaskContext;
+import org.apache.gearpump.Message;
+import org.apache.gearpump.streaming.task.TaskContext;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -88,11 +88,11 @@ public class PersistComponentAlertsTaskTest {
         PowerMockito.whenNew(RuleComponentsStorageManager.class)
                 .withArguments(ruleConditionsRepository, rulesWithObservation)
                 .thenReturn(componentsStorageManagerMock);
-        when(message.msg()).thenReturn(gson.toJson(rulesWithObservation));
+        when(message.value()).thenReturn(gson.toJson(rulesWithObservation));
 
         persistComponentAlertsTask.onNext(message);
 
-        verify(message, times(1)).msg();
+        verify(message, times(1)).value();
         verify(componentsStorageManagerMock, times(1)).persistBasicAndStatisticsRuleComponents();
     }
 
@@ -102,10 +102,10 @@ public class PersistComponentAlertsTaskTest {
                 .withAnyArguments()
                 .thenReturn(componentsStorageManagerMock);
 
-        when(message.msg()).thenReturn(new Observation());
+        when(message.value()).thenReturn(new Observation());
         persistComponentAlertsTask.onNext(message);
 
-        verify(message, times(2)).msg();
+        verify(message, times(2)).value();
         verify(componentsStorageManagerMock, never()).persistBasicAndStatisticsRuleComponents();
     }
 
@@ -116,12 +116,12 @@ public class PersistComponentAlertsTaskTest {
         PowerMockito.whenNew(RuleComponentsStorageManager.class)
                 .withArguments(ruleConditionsRepository, rulesWithObservation)
                 .thenReturn(componentsStorageManagerMock);
-        when(message.msg()).thenReturn(gson.toJson(rulesWithObservation));
+        when(message.value()).thenReturn(gson.toJson(rulesWithObservation));
         doThrow(IOException.class).when(componentsStorageManagerMock).persistBasicAndStatisticsRuleComponents();
 
         persistComponentAlertsTask.onNext(message);
 
-        verify(message, times(1)).msg();
+        verify(message, times(1)).value();
         verify(componentsStorageManagerMock, times(1)).persistBasicAndStatisticsRuleComponents();
     }
 }

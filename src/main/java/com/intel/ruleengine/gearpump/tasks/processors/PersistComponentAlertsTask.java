@@ -24,14 +24,15 @@ import com.intel.ruleengine.gearpump.tasks.RuleEngineTask;
 import com.intel.ruleengine.gearpump.tasks.messages.RulesWithObservation;
 import com.intel.ruleengine.gearpump.tasks.messages.controllers.MessageReceiver;
 import com.intel.ruleengine.gearpump.tasks.storage.RuleComponentsStorageManager;
-import io.gearpump.Message;
-import io.gearpump.cluster.UserConfig;
-import io.gearpump.streaming.javaapi.Processor;
-import io.gearpump.streaming.task.StartTime;
-import io.gearpump.streaming.task.TaskContext;
+import org.apache.gearpump.Message;
+import org.apache.gearpump.cluster.UserConfig;
+import org.apache.gearpump.streaming.javaapi.Processor;
+//import org.apache.gearpump.streaming.task.StartTime;
+import org.apache.gearpump.streaming.task.TaskContext;
 
 import java.io.IOException;
 import java.util.List;
+import java.time.Instant;
 
 public class PersistComponentAlertsTask extends RuleEngineTask {
 
@@ -50,7 +51,7 @@ public class PersistComponentAlertsTask extends RuleEngineTask {
     }
 
     @Override
-    public void onStart(StartTime startTime) {
+    public void onStart(Instant startTime) {
         try {
             ruleConditionsRepository.createTable();
         } catch (IOException ex) {
@@ -70,7 +71,7 @@ public class PersistComponentAlertsTask extends RuleEngineTask {
             getMessageSender().send(checkedRulesWithObservation);
 
         } catch (InvalidMessageTypeException e) {
-            getLogger().warn("Incorrect format of message found - {}", message.msg().getClass().getCanonicalName());
+            getLogger().warn("Incorrect format of message found - {}", message.value().getClass().getCanonicalName());
         } catch (IOException e) {
             getLogger().error("Error during persisting rules in hbase.", e);
         }

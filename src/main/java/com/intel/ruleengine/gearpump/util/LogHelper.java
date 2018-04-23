@@ -17,7 +17,7 @@
 
 package com.intel.ruleengine.gearpump.util;
 
-import io.gearpump.util.LogUtil;
+import org.apache.gearpump.util.LogUtil;
 import org.slf4j.Logger;
 
 public final class LogHelper {

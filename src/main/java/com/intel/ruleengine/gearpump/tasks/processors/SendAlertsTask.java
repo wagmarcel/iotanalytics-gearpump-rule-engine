@@ -24,10 +24,11 @@ import com.intel.ruleengine.gearpump.tasks.InvalidMessageTypeException;
 import com.intel.ruleengine.gearpump.tasks.RuleEngineTask;
 import com.intel.ruleengine.gearpump.tasks.messages.RulesWithObservation;
 import com.intel.ruleengine.gearpump.tasks.messages.controllers.MessageReceiver;
-import io.gearpump.Message;
-import io.gearpump.cluster.UserConfig;
-import io.gearpump.streaming.javaapi.Processor;
-import io.gearpump.streaming.task.TaskContext;
+import org.apache.gearpump.DefaultMessage;
+import org.apache.gearpump.Message;
+import org.apache.gearpump.cluster.UserConfig;
+import org.apache.gearpump.streaming.javaapi.Processor;
+import org.apache.gearpump.streaming.task.TaskContext;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -59,9 +60,9 @@ public class SendAlertsTask extends RuleEngineTask {
 
             sendAlerts();
         } catch (InvalidMessageTypeException ex) {
-            getLogger().warn("Incorrect format of message found - {}", message.msg().getClass().getCanonicalName());
+            getLogger().warn("Incorrect format of message found - {}", message.value().getClass().getCanonicalName());
         }
-        getContext().output(new Message(message, now()));
+        getContext().output(DefaultMessage.apply(message, now()));
     }
 
     private void sendAlerts() {
