@@ -6,8 +6,8 @@ RUN curl --location --retry 3 --insecure https://dist.apache.org/repos/dist/rele
 
 ADD gear.conf gearpump_2.11-0.8.4-incubating/conf/gear.conf
 
-RUN sed -i -e "s/gearpump.root.logger=RollingFileAppender/gearpump.root.logger=RollingFileAppender,console/g" gearpump-2.11-0.8.0/conf/log4j.properties
-RUN sed -i -e "s/gearpump.application.logger=ApplicationLogAppender/gearpump.application.logger=ApplicationLogAppender,console/g" gearpump-2.11-0.8.0/conf/log4j.properties
+RUN sed -i -e "s/gearpump.root.logger=RollingFileAppender/gearpump.root.logger=RollingFileAppender,console/g" gearpump_2.11-0.8.4-incubating/conf/log4j.properties
+RUN sed -i -e "s/gearpump.application.logger=ApplicationLogAppender/gearpump.application.logger=ApplicationLogAppender,console/g" gearpump_2.11-0.8.4-incubating/conf/log4j.properties
 
 EXPOSE 8090
 
