@@ -68,7 +68,7 @@ public class HeartbeatTask extends RuleEngineTask {
     }
 
     private Message getOutputMessage(Message message) {
-        Object msg = message.value();
+        Object msg = MESSAGE;
 
         byte[] key = null;
         byte[] value = null;
@@ -76,10 +76,10 @@ public class HeartbeatTask extends RuleEngineTask {
           key = "message".getBytes("UTF-8");
           value = ((String) msg).getBytes("UTF-8");
           Tuple2<byte[], byte[]> tuple = new Tuple2<byte[], byte[]>(key, value);
-          return DefaultMessage.apply(message, now());
+          return new DefaultMessage(value, now());
         } catch (UnsupportedEncodingException e) {
           e.printStackTrace();
-          return DefaultMessage.apply(message, now());
+          return new DefaultMessage(value, now());
         }
     }
 

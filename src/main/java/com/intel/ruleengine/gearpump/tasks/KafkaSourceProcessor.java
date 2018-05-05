@@ -17,6 +17,8 @@
 
 package com.intel.ruleengine.gearpump.tasks;
 
+import com.intel.ruleengine.gearpump.util.LogHelper;
+import org.slf4j.Logger;
 import org.apache.gearpump.cluster.UserConfig;
 import org.apache.gearpump.cluster.client.ClientContext;
 import org.apache.gearpump.streaming.javaapi.Processor;
@@ -32,6 +34,7 @@ public class KafkaSourceProcessor {
     public static final String KAFKA_TOPIC_PROPERTY = "KAFKA_TOPIC";
     public static final String KAFKA_URI_PROPERTY = "KAFKA_URI";
     public static final String KAFKA_ZOOKEEPER_PROPERTY = "KAFKA_URI_ZOOKEEPER";
+    private final Logger logger = LogHelper.getLogger(KafkaSourceProcessor.class);
 
     private static String name;
 
@@ -47,9 +50,11 @@ public class KafkaSourceProcessor {
         Properties props = new Properties();
 	props.put(KafkaConfig.ZOOKEEPER_CONNECT_CONFIG, zookeeperQuorum);
 	props.put(KafkaConfig.BOOTSTRAP_SERVERS_CONFIG, serverUri);
-	props.put(KafkaConfig.CONSUMER_START_OFFSET_CONFIG,
-		  new java.lang.Long(OffsetRequest.LatestTime()));
-	props.put(KafkaConfig.CHECKPOINT_STORE_NAME_PREFIX_CONFIG, "gearpump");
+	/*props.put(KafkaConfig.CONSUMER_START_OFFSET_CONFIG,
+	  new java.lang.Long(-1));*/
+	props.put(KafkaConfig.CHECKPOINT_STORE_NAME_PREFIX_CONFIG, "");
+	props.put(KafkaConfig.GROUP_ID_CONFIG, "ruleEngine");
+	props.put(KafkaConfig.CLIENT_ID_CONFIG, "");
         //zookeeperProperties.setProperty("zookeeper.connect", zookeeperQuorum);
         //zookeeperProperties.setProperty("group.id", "gearpump");
         // todo what is the default storage on TAP?
@@ -65,6 +70,7 @@ public class KafkaSourceProcessor {
         kafkaSource = new KafkaSource(topic, props);
         context = ClientContext.apply();
 	kafkaSource.setCheckpointStore(offsetStorageFactory);
+	logger.error("Marcel23: Watermakr " + kafkaSource.getWatermark());
     }
 
     public Processor getKafkaSourceProcessor(int parallelProcessorNumber) {

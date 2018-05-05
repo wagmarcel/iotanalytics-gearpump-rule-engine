@@ -51,12 +51,15 @@ public class GetComponentRulesTask extends RuleEngineTask {
     public GetComponentRulesTask(TaskContext context, UserConfig userConfig, RulesRepository rulesRepository) {
         super(context, userConfig);
         this.rulesRepository = rulesRepository;
+	getLogger().error("GetComponentRulesTask initialized");
     }
 
     @Override
     public void onNext(Message message) {
+	getLogger().error("GetComponentRulesTask-onNext" + message.timestamp());
         try {
             observations = getInputMessage(message);
+	    observations.forEach(item -> getLogger().error("Marcel53: message observations " + item.getAid()));
             sendObservations();
         } catch (InvalidMessageTypeException e) {
             getLogger().warn("Incorrect format of message found - " + message.value().getClass().getCanonicalName());
@@ -72,6 +75,14 @@ public class GetComponentRulesTask extends RuleEngineTask {
                 .filter(r -> hasObservationRules(r))
                 .collect(Collectors.toList());
 
+	observationsWithActiveRules.forEach(
+					    item
+					    -> item.getRules().forEach(item2
+								       -> getLogger().error("Marcel54: observationsWithActiveRules" + item2.getId())));
+
+	observationsWithActiveRules.forEach(
+					    item
+					    -> getLogger().error("Marcel55: " + item.getObservation().getAid()));
         getMessageSender().send(observationsWithActiveRules);
     }
 

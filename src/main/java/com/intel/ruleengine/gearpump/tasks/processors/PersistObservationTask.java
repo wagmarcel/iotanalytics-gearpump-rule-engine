@@ -70,6 +70,7 @@ public class PersistObservationTask extends RuleEngineTask {
     public void onNext(Message message) {
         try {
             rulesWithObservation = MessageReceiver.build(message).getMessage();
+	    getLogger().error("Marcel42: ", message.timestamp());
 
             //Replicate observations data in gearpump's hbase in order for executing statistics aggregations
             List<Observation> observationsForStatisticsRules = filterObservationWithStatisticsRules();
