@@ -25,10 +25,10 @@ import com.intel.ruleengine.gearpump.tasks.messages.Observation;
 import com.intel.ruleengine.gearpump.tasks.messages.Rule;
 import com.intel.ruleengine.gearpump.tasks.messages.RulesWithObservation;
 import com.intel.ruleengine.gearpump.tasks.messages.controllers.KafkaMessageConverter;
-import io.gearpump.Message;
-import io.gearpump.cluster.UserConfig;
-import io.gearpump.streaming.javaapi.Processor;
-import io.gearpump.streaming.task.TaskContext;
+import org.apache.gearpump.Message;
+import org.apache.gearpump.cluster.UserConfig;
+import org.apache.gearpump.streaming.javaapi.Processor;
+import org.apache.gearpump.streaming.task.TaskContext;
 
 import java.io.IOException;
 import java.util.List;

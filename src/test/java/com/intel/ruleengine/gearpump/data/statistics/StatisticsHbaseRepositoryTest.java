@@ -3,7 +3,7 @@ package com.intel.ruleengine.gearpump.data.statistics;
 import com.intel.ruleengine.gearpump.data.HbaseProperties;
 import com.intel.ruleengine.gearpump.rules.IdGenerator;
 import com.intel.ruleengine.gearpump.tasks.messages.Observation;
-import io.gearpump.cluster.UserConfig;
+import org.apache.gearpump.cluster.UserConfig;
 import org.apache.hadoop.hbase.client.*;
 import org.junit.Assert;
 import org.junit.Before;

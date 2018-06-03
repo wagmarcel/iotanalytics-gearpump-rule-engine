@@ -1,6 +1,6 @@
 package com.intel.ruleengine.gearpump.data;
 
-import io.gearpump.cluster.UserConfig;
+import org.apache.gearpump.cluster.UserConfig;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

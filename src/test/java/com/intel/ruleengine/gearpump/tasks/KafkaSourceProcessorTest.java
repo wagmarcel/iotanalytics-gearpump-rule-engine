@@ -1,7 +1,7 @@
 package com.intel.ruleengine.gearpump.tasks;
 
-import io.gearpump.cluster.UserConfig;
-import io.gearpump.cluster.client.ClientContext;
+import org.apache.gearpump.cluster.UserConfig;
+import org.apache.gearpump.cluster.client.ClientContext;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.Assert;

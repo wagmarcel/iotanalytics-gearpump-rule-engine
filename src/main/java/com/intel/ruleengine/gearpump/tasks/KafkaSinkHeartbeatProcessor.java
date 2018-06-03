@@ -18,7 +18,7 @@
 package com.intel.ruleengine.gearpump.tasks;
 
 import com.intel.ruleengine.gearpump.tasks.KafkaSinkProcessor;
-import io.gearpump.cluster.UserConfig;
+import org.apache.gearpump.cluster.UserConfig;
 
 public class KafkaSinkHeartbeatProcessor extends KafkaSinkProcessor {
 

@@ -7,7 +7,7 @@ import com.intel.ruleengine.gearpump.rules.RuleCreator;
 import com.intel.ruleengine.gearpump.tasks.messages.Observation;
 import com.intel.ruleengine.gearpump.tasks.messages.Rule;
 import com.intel.ruleengine.gearpump.tasks.messages.RulesWithObservation;
-import io.gearpump.cluster.UserConfig;
+import org.apache.gearpump.cluster.UserConfig;
 import org.apache.hadoop.hbase.client.*;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.junit.runner.RunWith;

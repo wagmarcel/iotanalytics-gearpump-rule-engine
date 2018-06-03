@@ -2,7 +2,7 @@ package com.intel.ruleengine.gearpump.graph;
 
 import com.google.gson.Gson;
 import com.intel.ruleengine.gearpump.apiclients.DashboardConfig;
-import io.gearpump.cluster.UserConfig;
+import org.apache.gearpump.cluster.UserConfig;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

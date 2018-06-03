@@ -18,7 +18,7 @@
 package com.intel.ruleengine.gearpump.tasks;
 
 import com.intel.ruleengine.gearpump.tasks.KafkaSourceProcessor;
-import io.gearpump.cluster.UserConfig;
+import org.apache.gearpump.cluster.UserConfig;
 
 public class KafkaSourceRulesUpdateProcessor extends KafkaSourceProcessor {
 

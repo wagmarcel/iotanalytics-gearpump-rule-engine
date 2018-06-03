@@ -19,18 +19,19 @@ package com.intel.ruleengine.gearpump.tasks.processors;
 
 import com.google.gson.Gson;
 import com.intel.ruleengine.gearpump.tasks.RuleEngineTask;
-import io.gearpump.Message;
+import org.apache.gearpump.Message;
 import com.intel.ruleengine.gearpump.tasks.InvalidMessageTypeException;
 import com.intel.ruleengine.gearpump.tasks.messages.controllers.InputMessageParser;
 import com.intel.ruleengine.gearpump.util.ConfigHelper;
-import io.gearpump.cluster.UserConfig;
-import io.gearpump.streaming.javaapi.Processor;
-import io.gearpump.streaming.task.StartTime;
-import io.gearpump.streaming.task.TaskContext;
+import org.apache.gearpump.cluster.UserConfig;
+import org.apache.gearpump.streaming.javaapi.Processor;
+import org.apache.gearpump.streaming.task.StartTime;
+import org.apache.gearpump.streaming.task.TaskContext;
 import scala.concurrent.duration.FiniteDuration;
 import scala.Tuple2;
 import java.io.UnsupportedEncodingException;
 import java.util.concurrent.TimeUnit;
+import java.time.Instant;
 
 @SuppressWarnings({"checkstyle:illegalcatch", "PMD.AvoidCatchingGenericException"})
 public class HeartbeatTask extends RuleEngineTask {

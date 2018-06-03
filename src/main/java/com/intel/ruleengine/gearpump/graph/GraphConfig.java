@@ -11,7 +11,7 @@ import com.intel.ruleengine.gearpump.tasks.KafkaSinkHeartbeatProcessor;
 import com.intel.ruleengine.gearpump.tasks.processors.HeartbeatTask;
 
 import com.intel.ruleengine.gearpump.util.LogHelper;
-import io.gearpump.cluster.UserConfig;
+import org.apache.gearpump.cluster.UserConfig;
 import org.slf4j.Logger;
 
 /**

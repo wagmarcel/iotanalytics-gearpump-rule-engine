@@ -19,7 +19,7 @@ package com.intel.ruleengine.gearpump.tasks.messages.controllers;
 
 import com.google.gson.Gson;
 import com.intel.ruleengine.gearpump.tasks.TaskHelper;
-import io.gearpump.Message;
+import org.apache.gearpump.Message;
 
 
 public class OutputMessageCreator<InnerMessageType> {

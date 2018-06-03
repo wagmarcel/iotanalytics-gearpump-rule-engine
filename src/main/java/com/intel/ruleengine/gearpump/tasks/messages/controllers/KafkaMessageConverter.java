@@ -2,7 +2,7 @@ package com.intel.ruleengine.gearpump.tasks.messages.controllers;
 
 import com.intel.ruleengine.gearpump.tasks.InvalidMessageTypeException;
 import com.intel.ruleengine.gearpump.tasks.messages.Observation;
-import io.gearpump.Message;
+import org.apache.gearpump.Message;
 
 import java.util.List;
 

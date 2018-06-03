@@ -17,8 +17,8 @@
 package com.intel.ruleengine.gearpump.tasks.messages.controllers;
 
 import com.intel.ruleengine.gearpump.tasks.messages.RulesWithObservation;
-import io.gearpump.Message;
-import io.gearpump.streaming.task.TaskContext;
+import org.apache.gearpump.Message;
+import org.apache.gearpump.streaming.task.TaskContext;
 
 import java.util.List;
 

@@ -16,11 +16,11 @@
  */
 package com.intel.ruleengine.gearpump.graph;
 
-import io.gearpump.cluster.UserConfig;
-import io.gearpump.partitioner.HashPartitioner;
-import io.gearpump.partitioner.Partitioner;
-import io.gearpump.streaming.javaapi.Graph;
-import io.gearpump.streaming.javaapi.Processor;
+import org.apache.gearpump.cluster.UserConfig;
+import org.apache.gearpump.partitioner.HashPartitioner;
+import org.apache.gearpump.partitioner.Partitioner;
+import org.apache.gearpump.streaming.javaapi.Graph;
+import org.apache.gearpump.streaming.javaapi.Processor;
 
 public class GraphBuilder {
     private final Graph graph;

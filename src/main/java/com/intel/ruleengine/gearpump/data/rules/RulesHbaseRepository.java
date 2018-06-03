@@ -23,7 +23,7 @@ import com.intel.ruleengine.gearpump.data.BaseRepository;
 import com.intel.ruleengine.gearpump.data.HbaseValues;
 import com.intel.ruleengine.gearpump.data.RulesRepository;
 import com.intel.ruleengine.gearpump.tasks.messages.Rule;
-import io.gearpump.cluster.UserConfig;
+import org.apache.gearpump.cluster.UserConfig;
 import org.apache.hadoop.hbase.HTableDescriptor;
 import org.apache.hadoop.hbase.client.*;
 import org.apache.hadoop.hbase.filter.*;

@@ -17,13 +17,13 @@
 
 package com.intel.ruleengine.gearpump.tasks;
 
-import io.gearpump.cluster.UserConfig;
-import io.gearpump.cluster.client.ClientContext;
-import io.gearpump.streaming.javaapi.Processor;
-import io.gearpump.streaming.kafka.KafkaSink;
+import org.apache.gearpump.cluster.UserConfig;
+import org.apache.gearpump.cluster.client.ClientContext;
+import org.apache.gearpump.streaming.javaapi.Processor;
+import org.apache.gearpump.streaming.kafka.KafkaSink;
 
 import com.intel.ruleengine.gearpump.util.LogHelper;
-import io.gearpump.cluster.UserConfig;
+import org.apache.gearpump.cluster.UserConfig;
 import org.slf4j.Logger;
 
 import java.util.Properties;
