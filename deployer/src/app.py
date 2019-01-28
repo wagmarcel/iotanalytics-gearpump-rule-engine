@@ -48,13 +48,13 @@ if __name__ == "__main__":
     while True:
         try:
             oisp_client = oisp.Client(uri)
+            oisp_client.auth(conf["username"], conf["password"])
             break
-        except requests.exceptions.ConnectionError:
+        except (requests.exceptions.ConnectionError, oisp.client.OICException):
             print("Can not connect to {}, retrying".format(uri))
             time.sleep(1)
-    oisp_client.auth(conf["username"], conf["password"])
-    token = oisp_client.user_token.value
 
+    token = oisp_client.user_token.value
     pprint.pprint(conf)
 
     app_conf = {"application_name": "rule_engine_dashboard",
